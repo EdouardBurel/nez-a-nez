@@ -315,7 +315,7 @@ const hotspots = [
     h: 3.8,
     image: "assets/details/32.png",
     title: "Curiosité 32",
-    sound: 'audio/spots/32.mp3'
+    sound: 'audio/spots/village.mp3'
   },
   {
     id: "33",
@@ -325,7 +325,7 @@ const hotspots = [
     h: 3.8,
     image: "assets/details/33.png",
     title: "Curiosité 33",
-    sound: 'audio/spots/33.mp3'
+    sound: 'audio/spots/village.mp3'
   },
   {
     id: "34",
@@ -335,7 +335,7 @@ const hotspots = [
     h: 3.8,
     image: "assets/details/34.png",
     title: "Curiosité 34",
-    sound: 'audio/spots/34.mp3'
+    sound: 'audio/spots/village.mp3'
   },
 
   {
