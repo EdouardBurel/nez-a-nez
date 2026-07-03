@@ -16,7 +16,7 @@ export default function AudioPlayer({ src }) {
     const tryPlay = () => {
       const el = audioRef.current;
       if (!el) return;
-      el.volume = 0.55;
+      el.volume = 1.0;
       el.play()
         .then(() => setStarted(true))
         .catch(() => {});

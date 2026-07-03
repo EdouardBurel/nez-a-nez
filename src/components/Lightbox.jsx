@@ -30,7 +30,6 @@ export default function Lightbox({ spot, closing, onClose }) {
           ×
         </button>
         <img src={spot.image} alt={spot.title || `Curiosité ${spot.id}`} />
-        {spot.title && <figcaption>{spot.title}</figcaption>}
       </figure>
     </div>
   )

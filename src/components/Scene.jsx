@@ -101,9 +101,7 @@ export default function Scene({ hotspots, onSelect, debug, paused }) {
             title={debug ? spot.id : undefined}
             onClick={(e) => handleSpotClick(e, spot)}
             onMouseEnter={() => sounds.play(spot.sound)}
-            onMouseLeave={() => sounds.stop()}
             onFocus={() => sounds.play(spot.sound)}
-            onBlur={() => sounds.stop()}
           >
             {debug && <span className="hotspot-id">{spot.id}</span>}
           </button>

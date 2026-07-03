@@ -15,12 +15,12 @@ const manager = {
     // 32/33/34 partagent le même fichier : ne pas redémarrer
     if (this.currentSrc === src && this.current && !this.current.paused) {
       clearInterval(this.fadeTimer);
-      this.current.volume = 0.9;
+      this.current.volume = 0.04;
       return;
     }
     this.stop(true); // coupe net l'éventuel son précédent
     const audio = new Audio(src);
-    audio.volume = 0.9;
+    audio.volume = 0.04;
     audio.play().catch(() => {});
     this.current = audio;
     this.currentSrc = src;

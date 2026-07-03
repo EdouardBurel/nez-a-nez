@@ -148,7 +148,7 @@ const hotspots = [
     w: 4.2,
     h: 9.0,
     image: "assets/details/15.png",
-    title: "Portrait de famille",
+    title: "",
   },
   {
     id: "16",
@@ -157,7 +157,7 @@ const hotspots = [
     w: 4.2,
     h: 5.5,
     image: "assets/details/16.png",
-    title: "Le Trompettiste",
+    title: "",
   },
   // ---- Étage du milieu (suite) ----
   {
