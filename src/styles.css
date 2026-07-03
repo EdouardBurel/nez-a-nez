@@ -1,0 +1,382 @@
+/* ==========================================================
+   Cabinet NEZ à NEZ — feuille de style
+   Palette : nuit d'atelier (brun profond), lueur lanterne,
+   néon ambre chaud pour l'enseigne.
+   ========================================================== */
+
+:root {
+  --nuit: #17100b; /* fond derrière la scène */
+  --lanterne: #ffb347; /* lueur des zones cliquables */
+  --neon: #ffd9a0; /* cœur du néon */
+  --neon-halo: #ff8c1a; /* halo du néon */
+  --papier: #f3e6cf; /* texte clair */
+  --fondu: 320ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--nuit);
+  color: var(--papier);
+  font-family: Georgia, "Times New Roman", serif;
+  overflow: hidden; /* seul le conteneur de scène défile */
+}
+
+/* ---------- Scène et défilement horizontal ---------- */
+
+.scene-scroller {
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: #5a412b var(--nuit);
+}
+.scene-scroller:active {
+  cursor: grabbing;
+}
+.scene-scroller.is-paused {
+  pointer-events: none;
+}
+
+.scene-scroller::-webkit-scrollbar {
+  height: 8px;
+}
+.scene-scroller::-webkit-scrollbar-track {
+  background: var(--nuit);
+}
+.scene-scroller::-webkit-scrollbar-thumb {
+  background: #5a412b;
+  border-radius: 4px;
+}
+
+.scene {
+  position: relative;
+  height: 100%;
+  width: max-content; /* la largeur suit l'image */
+}
+
+.scene-image {
+  display: block;
+  height: 100%;
+  width: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- Zones cliquables ---------- */
+
+.hotspot {
+  position: absolute;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  min-width: 34px; /* confort de clic même pour les petites zones */
+  min-height: 34px;
+}
+
+/* Lueur de lanterne au survol */
+.hotspot::after {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 179, 71, 0.32),
+    rgba(255, 179, 71, 0.1) 55%,
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 240ms ease;
+  pointer-events: none;
+}
+.hotspot:hover::after,
+.hotspot:focus-visible::after {
+  opacity: 1;
+}
+
+.hotspot:focus-visible {
+  outline: 2px solid var(--lanterne);
+  outline-offset: 2px;
+}
+
+/* Une curiosité déjà visitée garde une très légère braise */
+.hotspot.visited::after {
+  opacity: 0.28;
+}
+.hotspot.visited:hover::after {
+  opacity: 1;
+}
+
+/* Mode debug (?debug dans l'URL) */
+.hotspot.debug {
+  outline: 1px dashed rgba(255, 80, 80, 0.9);
+  background: rgba(255, 80, 80, 0.15);
+  border-radius: 50%;
+}
+.hotspot-id {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: #ff5050;
+  font-weight: bold;
+}
+
+/* ---------- Enseigne néon « NEZ à NEZ » ---------- */
+
+/* ---------- Enseigne néon « NEZ à NEZ » ---------- */
+
+.neon-sign {
+  position: absolute;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.neon-sign:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 4px;
+}
+
+.neon-glow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen; /* la lumière s'ajoute à l'enseigne peinte */
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.neon-sign.is-on .neon-glow {
+  opacity: 1;
+  animation:
+    neon-flicker 2.2s ease-in-out 1,
+    neon-breathe 4s ease-in-out 2.2s infinite;
+}
+
+/* Clignotement d'allumage, façon vieux néon */
+@keyframes neon-flicker {
+  0% {
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  10% {
+    opacity: 0.2;
+  }
+  15% {
+    opacity: 1;
+  }
+  22% {
+    opacity: 0.4;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Légère respiration une fois allumée */
+@keyframes neon-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+
+/* ---------- Pop-up (lightbox) ---------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 4vmin;
+  background: rgba(10, 6, 3, 0.82);
+  backdrop-filter: blur(3px);
+  animation: fade-in var(--fondu) ease forwards;
+}
+.lightbox.is-closing {
+  animation: fade-out var(--fondu) ease forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.lightbox-frame {
+  position: relative;
+  margin: 0;
+  max-width: min(92vw, 1100px);
+  max-height: 92vh;
+  animation: frame-in var(--fondu) ease forwards;
+}
+.lightbox.is-closing .lightbox-frame {
+  animation: frame-out var(--fondu) ease forwards;
+}
+
+@keyframes frame-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes frame-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.lightbox-frame img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(92vh - 60px);
+  border: 6px solid #2a1d12;
+  border-radius: 4px;
+  box-shadow: 0 12px 60px rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-frame figcaption {
+  margin-top: 12px;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--papier);
+  letter-spacing: 0.04em;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #6b4d2f;
+  background: #241810;
+  color: var(--papier);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    transform 200ms ease;
+}
+.lightbox-close:hover {
+  background: #3a2818;
+  transform: scale(1.08);
+}
+.lightbox-close:focus-visible {
+  outline: 2px solid var(--lanterne);
+}
+
+/* ---------- Interface : musique et indication ---------- */
+
+.audio-toggle {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid #6b4d2f;
+  background: rgba(30, 20, 12, 0.85);
+  color: var(--papier);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    transform 200ms ease;
+}
+.audio-toggle:hover {
+  background: rgba(58, 40, 24, 0.95);
+  transform: scale(1.06);
+}
+.audio-toggle:focus-visible {
+  outline: 2px solid var(--lanterne);
+}
+
+.hint {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 40;
+  font-size: 0.85rem;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  color: rgba(243, 230, 207, 0.75);
+  background: rgba(23, 16, 11, 0.6);
+  padding: 6px 14px;
+  border-radius: 999px;
+  pointer-events: none;
+  animation: hint-fade 1s ease 6s forwards;
+}
+@keyframes hint-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+/* ---------- Accessibilité : mouvement réduit ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-sign.is-on .neon-text {
+    animation: none;
+  }
+  .lightbox,
+  .lightbox-frame,
+  .lightbox.is-closing,
+  .lightbox.is-closing .lightbox-frame {
+    animation-duration: 1ms;
+  }
+}
