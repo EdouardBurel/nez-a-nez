@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import sounds from "../sounds.js";
 
 /**
  * Fond sonore en boucle.
@@ -44,7 +43,6 @@ export default function AudioPlayer({ src }) {
         .catch(() => {});
     }
     el.muted = !el.muted;
-    sounds.setMuted(el.muted); // ← ajout
     setMuted(el.muted);
   };
 

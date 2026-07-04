@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { signZone } from "../hotspots.js";
+import sounds from "../sounds.js";
 
 /**
  * L'enseigne « NEZ à NEZ » : un clic l'allume (image néon superposée
@@ -22,6 +23,7 @@ export default function NeonSign() {
         e.stopPropagation();
         setOn((v) => !v);
       }}
+      onMouseEnter={() => sounds.play("audio/spots/G.mp3")}
       aria-pressed={on}
       aria-label={on ? "Éteindre l'enseigne" : "Allumer l'enseigne"}
     >
