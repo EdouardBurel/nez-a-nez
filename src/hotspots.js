@@ -73,7 +73,7 @@ const hotspots = [
     h: 9.5,
     image: "assets/details/07.png",
     title: "Les Visiteurs",
-    sound: "audio/spots/07.mp3",
+    sound: "audio/spots/Q.mp3",
   },
   {
     id: "08",
@@ -187,7 +187,7 @@ const hotspots = [
     h: 20.1,
     image: "assets/details/19.png",
     title: "Le laboratoire",
-    sound: "audio/spots/19.mp3",
+    sound: "audio/spots/E.mp3",
   },
   {
     id: "20",
@@ -216,7 +216,7 @@ const hotspots = [
     h: 9.0,
     image: "assets/details/22.png",
     title: "Le tonneau",
-    sound: "audio/spots/I2.mp3",
+    sound: "audio/spots/I.mp3",
   },
   {
     id: "23",
@@ -369,7 +369,6 @@ const hotspots = [
     h: 21.2,
     image: "assets/details/39.png",
     title: "Le réverbère",
-    sound: "audio/spots/39.mp3",
   },
   {
     id: "40",
@@ -610,7 +609,7 @@ export const soundZones = [
   { id: "M", cx: 41.25, cy: 67.42, w: 5.3, h: 10.2, sound: "audio/spots/M.mp3" },
   { id: "D", cx: 70.8, cy: 70.12, w: 1.6, h: 5.0, sound: "audio/spots/D.mp3" },
   { id: "A2", cx: 24.55, cy: 88.61, w: 7.6, h: 11.1, sound: "audio/spots/A.mp3" },
-  { id: "I2", cx: 4.49, cy: 89.52, w: 4.2, h: 9.5, sound: "audio/spots/I2.mp3" },
+  { id: "I2", cx: 4.49, cy: 89.52, w: 4.2, h: 9.5, sound: "audio/spots/I.mp3" },
   { id: "H", cx: 54.12, cy: 89.8, w: 10.7, h: 6.0, sound: "audio/spots/H.wav" },
   { id: "O", cx: 74.1, cy: 93.57, w: 3.1, h: 7.4, sound: "audio/spots/O.mp3" },
   { id: "K", cx: 93.4, cy: 87.66, w: 5.9, h: 11.8, sound: "audio/spots/K.mp3" },
