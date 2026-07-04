@@ -1,17 +1,14 @@
 /**
  * Zones cliquables du cabinet.
- * Les coordonnées sont en POURCENTAGE de l'image (scene.png : 1772 × 887 px),
- * mesurées automatiquement à partir de Détails.png.
+ * Coordonnées en POURCENTAGE de l'image (scene.png : 1772 x 887 px).
+ * Mode reglage : ajoutez ?debug a l'URL (zones rouges = images,
+ * zones bleues = sons) ; chaque clic loggue ses coordonnees en console.
  *
- *  - cx / cy : centre de la zone (en % de la largeur / hauteur de l'image)
- *  - w / h   : largeur / hauteur de la zone (en %)
- *  - image   : le visuel qui s'affiche dans la pop-up
- *  - title   : légende affichée sous l'image (modifiable / supprimable)
- *
- * Pour ajuster une zone : lancez le site avec  ?debug  à la fin de l'URL
- * (ex. http://localhost:5173/?debug). Les zones deviennent visibles et
- * chaque clic sur la scène affiche ses coordonnées en % dans la console.
- * Il suffit ensuite de recopier les valeurs ici.
+ * Sons de survol : la plupart des sons "lettres" (plan Sons.png) sont
+ * attaches directement aux hotspots qui recouvrent la zone, sinon le
+ * hotspot (au-dessus) bloquerait le declenchement. Les soundZones plus
+ * bas ne servent que pour les lettres en zone libre, ou pour deborder
+ * autour d'un hotspot (meme fichier -> le son continue sans coupure).
  */
 const hotspots = [
   {
@@ -76,7 +73,7 @@ const hotspots = [
     h: 9.5,
     image: "assets/details/07.png",
     title: "Les Visiteurs",
-    sound: 'audio/spots/07.mp3'
+    sound: "audio/spots/07.mp3",
   },
   {
     id: "08",
@@ -104,6 +101,7 @@ const hotspots = [
     h: 8.0,
     image: "assets/details/10.png",
     title: "Le Patron du PMU",
+    sound: "audio/spots/L.mp3",
   },
   {
     id: "11",
@@ -113,6 +111,7 @@ const hotspots = [
     h: 8.0,
     image: "assets/details/11.png",
     title: "Le Turfiste",
+    sound: "audio/spots/L.mp3",
   },
   {
     id: "12",
@@ -149,6 +148,7 @@ const hotspots = [
     h: 9.0,
     image: "assets/details/15.png",
     title: "",
+    sound: "audio/spots/S.wav",
   },
   {
     id: "16",
@@ -158,8 +158,8 @@ const hotspots = [
     h: 5.5,
     image: "assets/details/16.png",
     title: "",
+    sound: "audio/spots/J.mp3",
   },
-  // ---- Étage du milieu (suite) ----
   {
     id: "17",
     cx: 61.79,
@@ -177,6 +177,7 @@ const hotspots = [
     h: 16.2,
     image: "assets/details/18.png",
     title: "La voyante",
+    sound: "audio/spots/V.mp3",
   },
   {
     id: "19",
@@ -186,7 +187,7 @@ const hotspots = [
     h: 20.1,
     image: "assets/details/19.png",
     title: "Le laboratoire",
-    sound: 'audio/spots/19.mp3'
+    sound: "audio/spots/19.mp3",
   },
   {
     id: "20",
@@ -196,9 +197,8 @@ const hotspots = [
     h: 21.9,
     image: "assets/details/20.png",
     title: "L'infirmerie",
+    sound: "audio/spots/N.mp3",
   },
-
-  // ---- Rez-de-chaussée ----
   {
     id: "21",
     cx: 2.17,
@@ -216,6 +216,7 @@ const hotspots = [
     h: 9.0,
     image: "assets/details/22.png",
     title: "Le tonneau",
+    sound: "audio/spots/I2.mp3",
   },
   {
     id: "23",
@@ -234,11 +235,8 @@ const hotspots = [
     h: 10.4,
     image: "assets/details/24.png",
     title: "Le train",
-    sound: 'audio/spots/24.mp3'
+    sound: "audio/spots/24.mp3",
   },
-
-  // 25 / 26 / 27 : un seul ovale sur le plan (la salle à manger),
-  // découpé ici en trois bandes de haut en bas. À affiner si besoin.
   {
     id: "25",
     cx: 24.97,
@@ -247,6 +245,7 @@ const hotspots = [
     h: 6.6,
     image: "assets/details/25.png",
     title: "L'horloge",
+    sound: "audio/spots/C.mp3",
   },
   {
     id: "26",
@@ -266,7 +265,6 @@ const hotspots = [
     image: "assets/details/27.png",
     title: "La table dressée",
   },
-
   {
     id: "28",
     cx: 35.47,
@@ -284,6 +282,7 @@ const hotspots = [
     h: 10.3,
     image: "assets/details/29.png",
     title: "Le projecteur",
+    sound: "audio/spots/M.mp3",
   },
   {
     id: "30",
@@ -293,7 +292,7 @@ const hotspots = [
     h: 11.1,
     image: "assets/details/30.png",
     title: "La moto",
-    sound: 'audio/spots/30.mp3'
+    sound: "audio/spots/B.mp3",
   },
   {
     id: "31",
@@ -304,9 +303,6 @@ const hotspots = [
     image: "assets/details/31.png",
     title: "Le petit cadre",
   },
-
-  // 32 / 33 / 34 : un seul ovale sur le plan (le village miniature),
-  // découpé en trois bandes de haut en bas.
   {
     id: "32",
     cx: 49.8,
@@ -315,7 +311,7 @@ const hotspots = [
     h: 3.8,
     image: "assets/details/32.png",
     title: "Curiosité 32",
-    sound: 'audio/spots/village.mp3'
+    sound: "audio/spots/T.mp3",
   },
   {
     id: "33",
@@ -325,7 +321,7 @@ const hotspots = [
     h: 3.8,
     image: "assets/details/33.png",
     title: "Curiosité 33",
-    sound: 'audio/spots/village.mp3'
+    sound: "audio/spots/T.mp3",
   },
   {
     id: "34",
@@ -335,9 +331,8 @@ const hotspots = [
     h: 3.8,
     image: "assets/details/34.png",
     title: "Curiosité 34",
-    sound: 'audio/spots/village.mp3'
+    sound: "audio/spots/T.mp3",
   },
-
   {
     id: "35",
     cx: 55.98,
@@ -364,6 +359,7 @@ const hotspots = [
     h: 19.4,
     image: "assets/details/38.png",
     title: "La cellule",
+    sound: "audio/spots/D.mp3",
   },
   {
     id: "39",
@@ -373,7 +369,7 @@ const hotspots = [
     h: 21.2,
     image: "assets/details/39.png",
     title: "Le réverbère",
-    sound: 'audio/spots/39.mp3'
+    sound: "audio/spots/39.mp3",
   },
   {
     id: "40",
@@ -401,9 +397,8 @@ const hotspots = [
     h: 16.7,
     image: "assets/details/42.png",
     title: "Le gramophone",
+    sound: "audio/spots/K.mp3",
   },
-
-  // ---- Étage du haut (suite) ----
   {
     id: "43",
     cx: 82.82,
@@ -412,6 +407,7 @@ const hotspots = [
     h: 5.5,
     image: "assets/details/43.png",
     title: "Le chapiteau",
+    sound: "audio/spots/P.mp3",
   },
   {
     id: "47",
@@ -439,10 +435,8 @@ const hotspots = [
     h: 4.0,
     image: "assets/details/50.png",
     title: "Curiosité 50",
+    sound: "audio/spots/S.wav",
   },
-
-  // ---- Rez-de-chaussée (suite) ----
-  // 44 / 36 : un seul ovale large sur le plan, découpé gauche / droite.
   {
     id: "44",
     cx: 50.6,
@@ -451,6 +445,7 @@ const hotspots = [
     h: 8.1,
     image: "assets/details/44.png",
     title: "Le paquebot",
+    sound: "audio/spots/H.wav",
   },
   {
     id: "36",
@@ -460,8 +455,8 @@ const hotspots = [
     h: 8.1,
     image: "assets/details/36.png",
     title: "Curiosité 36",
+    sound: "audio/spots/H.wav",
   },
-
   {
     id: "45",
     cx: 59.85,
@@ -488,6 +483,7 @@ const hotspots = [
     h: 6.1,
     image: "assets/details/51.png",
     title: "Le médaillon",
+    sound: "audio/spots/O.mp3",
   },
   {
     id: "52",
@@ -499,7 +495,7 @@ const hotspots = [
     title: "Le fauteuil",
   },
 
-  // ---- Les polaroïds sur le fil (lettres A à J) ----
+  // ---- Les polaroïds sur le fil ----
   {
     id: "A",
     cx: 44.2,
@@ -526,6 +522,7 @@ const hotspots = [
     h: 5.5,
     image: "assets/details/C.png",
     title: "Polaroïd C",
+    sound: "audio/spots/F.mp3",
   },
   {
     id: "D",
@@ -593,7 +590,31 @@ const hotspots = [
 ];
 
 /** Zone de l'enseigne « NEZ à NEZ » (position exacte mesurée dans la scène). */
-export const signZone = { left: 47.57, top: 2.03, width: 17.33, height: 13.53 }
+export const signZone = { left: 47.57, top: 2.03, width: 17.33, height: 13.53 };
+
+/** Zones sonores libres (survol uniquement, pas de pop-up). */
+export const soundZones = [
+  { id: "U", cx: 2.48, cy: 6.03, w: 2.5, h: 5.8, sound: "audio/spots/U.mp3" },
+  { id: "I", cx: 21.9, cy: 4.85, w: 1.9, h: 5.6, sound: "audio/spots/I.mp3" },
+  { id: "G", cx: 56.66, cy: 9.41, w: 14.6, h: 9.8, sound: "audio/spots/G.mp3" },
+  { id: "s", cx: 90.12, cy: 14.04, w: 1.9, h: 4.6, sound: "audio/spots/S.wav" },
+  { id: "P", cx: 82.48, cy: 19.39, w: 4.7, h: 13.1, sound: "audio/spots/P.mp3" },
+  { id: "L", cx: 12.84, cy: 39.63, w: 6.3, h: 7.1, sound: "audio/spots/L.mp3" },
+  { id: "R", cx: 18.62, cy: 46.67, w: 1.6, h: 2.9, sound: "audio/spots/R.mp3" },
+  { id: "S", cx: 52.14, cy: 37.4, w: 4.6, h: 7.0, sound: "audio/spots/S.wav" },
+  { id: "J", cx: 52.14, cy: 44.3, w: 4.6, h: 7.0, sound: "audio/spots/J.mp3" },
+  { id: "V", cx: 72.55, cy: 45.55, w: 1.5, h: 2.9, sound: "audio/spots/V.mp3" },
+  { id: "N", cx: 90.89, cy: 42.0, w: 3.7, h: 9.8, sound: "audio/spots/N.mp3" },
+  { id: "F", cx: 47.26, cy: 60.48, w: 1.8, h: 5.8, sound: "audio/spots/F.mp3" },
+  { id: "C", cx: 20.82, cy: 64.6, w: 2.6, h: 5.4, sound: "audio/spots/C.mp3" },
+  { id: "M", cx: 41.25, cy: 67.42, w: 5.3, h: 10.2, sound: "audio/spots/M.mp3" },
+  { id: "D", cx: 70.8, cy: 70.12, w: 1.6, h: 5.0, sound: "audio/spots/D.mp3" },
+  { id: "A2", cx: 24.55, cy: 88.61, w: 7.6, h: 11.1, sound: "audio/spots/A.mp3" },
+  { id: "I2", cx: 4.49, cy: 89.52, w: 4.2, h: 9.5, sound: "audio/spots/I2.mp3" },
+  { id: "H", cx: 54.12, cy: 89.8, w: 10.7, h: 6.0, sound: "audio/spots/H.wav" },
+  { id: "O", cx: 74.1, cy: 93.57, w: 3.1, h: 7.4, sound: "audio/spots/O.mp3" },
+  { id: "K", cx: 93.4, cy: 87.66, w: 5.9, h: 11.8, sound: "audio/spots/K.mp3" },
+];
 
 export default hotspots.map((spot) => ({
   clickSound: "audio/clicks/photoClick.mp3",

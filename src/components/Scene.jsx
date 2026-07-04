@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import NeonSign from "./NeonSign.jsx";
 import sounds from "../sounds.js";
+import { soundZones } from "../hotspots.js";
 
 /**
  * La scène : l'image du cabinet à hauteur d'écran, défilement horizontal.
@@ -83,6 +84,22 @@ export default function Scene({ hotspots, onSelect, debug, paused }) {
           alt="Le cabinet de curiosités NEZ à NEZ"
           draggable="false"
         />
+
+        {soundZones.map((zone) => (
+          <div
+            key={zone.id}
+            className={`sound-zone${debug ? " debug" : ""}`}
+            style={{
+              left: `${zone.cx - zone.w / 2}%`,
+              top: `${zone.cy - zone.h / 2}%`,
+              width: `${zone.w}%`,
+              height: `${zone.h}%`,
+            }}
+            onMouseEnter={() => sounds.play(zone.sound)}
+          >
+            {debug && <span className="sound-zone-id">{zone.id}</span>}
+          </div>
+        ))}
 
         <NeonSign />
 

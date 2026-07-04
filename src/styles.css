@@ -354,6 +354,26 @@ body {
   }
 }
 
+/* ---------- Zones sonores (survol) ---------- */
+
+.sound-zone {
+  position: absolute;
+  border-radius: 50%;
+}
+.sound-zone.debug {
+  outline: 1px dashed rgba(80, 120, 255, 0.9);
+  background: rgba(80, 120, 255, 0.15);
+}
+.sound-zone-id {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: #5078ff;
+  font-weight: bold;
+}
+
 /* ---------- Accessibilité : mouvement réduit ---------- */
 
 @media (prefers-reduced-motion: reduce) {
