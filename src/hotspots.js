@@ -595,4 +595,7 @@ const hotspots = [
 /** Zone de l'enseigne « NEZ à NEZ » (position exacte mesurée dans la scène). */
 export const signZone = { left: 47.57, top: 2.03, width: 17.33, height: 13.53 }
 
-export default hotspots;
+export default hotspots.map((spot) => ({
+  clickSound: "audio/clicks/photoClick.mp3",
+  ...spot,
+}));
