@@ -5,7 +5,7 @@ import Lightbox from "./components/Lightbox.jsx";
 import AudioPlayer from "./components/AudioPlayer.jsx";
 import sounds from "./sounds.js";
 // ---------- NOUVEAU : page 1 ----------
-import Page1 from "./components/page1.jsx";
+import Page1 from "./components/Page1.jsx";
 import OverlayStack from "./components/OverlayStack.jsx";
 
 
