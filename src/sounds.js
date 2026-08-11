@@ -5,10 +5,37 @@
  * - respecte le bouton muet global (voir AudioPlayer.jsx)
  */
 const manager = {
+  defaultVolume: 0.35, // volume général des sons de survol
   muted: false,
   current: null,
   currentSrc: null,
   fadeTimer: null,
+
+  play(src, volume) {
+    if (this.muted || !src) return;
+    const vol = volume ?? this.defaultVolume;
+    // même son encore en cours de lecture -> on le laisse continuer
+    if (
+      this.currentSrc === src &&
+      this.current &&
+      !this.current.paused &&
+      !this.current.ended
+    ) {
+      return;
+    }
+    this.stop(true);
+    const audio = new Audio(src);
+    audio.volume = vol;
+    audio.play().catch(() => {});
+    audio.onended = () => {
+      if (this.current === audio) {
+        this.current = null;
+        this.currentSrc = null;
+      }
+    };
+    this.current = audio;
+    this.currentSrc = src;
+  },
 
   play(src) {
     if (this.muted || !src) return;

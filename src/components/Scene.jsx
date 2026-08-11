@@ -1,15 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import NeonSign from "./NeonSign.jsx";
 import sounds from "../sounds.js";
-import { soundZones } from "../hotspots.js";
+import { soundZones as cabinetSoundZones } from "../hotspots.js";
 
 /**
- * La scène : l'image du cabinet à hauteur d'écran, défilement horizontal.
+ * La scène : l'image à hauteur d'écran, défilement horizontal.
  * - molette de la souris => défilement horizontal
  * - cliquer-glisser => déplacement (comme dans un point & click)
  * - zones cliquables positionnées en % de l'image
+ *
+ * Réutilisable pour toute pièce : passer `image`, `hotspots` et
+ * `soundZones`. `showNeon` n'affiche l'enseigne que dans le cabinet.
  */
-export default function Scene({ hotspots, onSelect, debug, paused }) {
+export default function Scene({
+  hotspots,
+  onSelect,
+  debug,
+  paused,
+  image = "assets/scene.png",
+  alt = "Le cabinet de curiosités NEZ à NEZ",
+  soundZones = cabinetSoundZones,
+  showNeon = true,
+}) {
   const scrollerRef = useRef(null);
   const drag = useRef({ down: false, moved: false, startX: 0, startLeft: 0 });
   const [visited, setVisited] = useState(() => new Set());
@@ -78,12 +90,7 @@ export default function Scene({ hotspots, onSelect, debug, paused }) {
       onPointerLeave={endDrag}
     >
       <div className="scene" onClick={handleSceneClick}>
-        <img
-          className="scene-image"
-          src="assets/scene.png"
-          alt="Le cabinet de curiosités NEZ à NEZ"
-          draggable="false"
-        />
+        <img className="scene-image" src={image} alt={alt} draggable="false" />
 
         {soundZones.map((zone) => (
           <div
@@ -95,13 +102,13 @@ export default function Scene({ hotspots, onSelect, debug, paused }) {
               width: `${zone.w}%`,
               height: `${zone.h}%`,
             }}
-            onMouseEnter={() => sounds.play(zone.sound)}
+            onMouseEnter={() => sounds.play(zone.sound, zone.soundVolume)}
           >
             {debug && <span className="sound-zone-id">{zone.id}</span>}
           </div>
         ))}
 
-        <NeonSign />
+        {showNeon && <NeonSign />}
 
         {hotspots.map((spot) => (
           <button
@@ -117,8 +124,8 @@ export default function Scene({ hotspots, onSelect, debug, paused }) {
             aria-label={spot.title || `Curiosité ${spot.id}`}
             title={debug ? spot.id : undefined}
             onClick={(e) => handleSpotClick(e, spot)}
-            onMouseEnter={() => sounds.play(spot.sound)}
-            onFocus={() => sounds.play(spot.sound)}
+            onMouseEnter={() => sounds.play(spot.sound, spot.soundVolume)}
+            onFocus={() => sounds.play(spot.sound, spot.soundVolume)}
           >
             {debug && <span className="hotspot-id">{spot.id}</span>}
           </button>

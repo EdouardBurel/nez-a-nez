@@ -178,6 +178,7 @@ const hotspots = [
     image: "assets/details/18.png",
     title: "La voyante",
     sound: "audio/spots/V.mp3",
+    soundVolume: 1.0,
   },
   {
     id: "19",
@@ -494,6 +495,16 @@ const hotspots = [
     title: "Le fauteuil",
   },
 
+  {
+    id: "porte-page1",
+    cx: 39, // = left 38.5 + width/2
+    cy: 39, // = top 44 + height/2
+    w: 7,
+    h: 14,
+    title: "La porte",
+    action: "porte", // ← intercepté dans App.jsx
+  },
+
   // ---- Les polaroïds sur le fil ----
   {
     id: "A",
@@ -597,18 +608,48 @@ export const soundZones = [
   { id: "I", cx: 21.9, cy: 4.85, w: 1.9, h: 5.6, sound: "audio/spots/I.mp3" },
   { id: "G", cx: 56.66, cy: 9.41, w: 14.6, h: 9.8, sound: "audio/spots/G.mp3" },
   { id: "s", cx: 90.12, cy: 14.04, w: 1.9, h: 4.6, sound: "audio/spots/S.wav" },
-  { id: "P", cx: 82.48, cy: 19.39, w: 4.7, h: 13.1, sound: "audio/spots/P.mp3" },
+  {
+    id: "P",
+    cx: 82.48,
+    cy: 19.39,
+    w: 4.7,
+    h: 13.1,
+    sound: "audio/spots/P.mp3",
+  },
   { id: "L", cx: 12.84, cy: 39.63, w: 6.3, h: 7.1, sound: "audio/spots/L.mp3" },
   { id: "R", cx: 18.62, cy: 46.67, w: 1.6, h: 2.9, sound: "audio/spots/R.mp3" },
   { id: "S", cx: 52.14, cy: 37.4, w: 4.6, h: 7.0, sound: "audio/spots/S.wav" },
   { id: "J", cx: 52.14, cy: 44.3, w: 4.6, h: 7.0, sound: "audio/spots/J.mp3" },
-  { id: "V", cx: 72.55, cy: 45.55, w: 1.5, h: 2.9, sound: "audio/spots/V.mp3" },
+  {
+    id: "V",
+    cx: 72.55,
+    cy: 45.55,
+    w: 1.5,
+    h: 2.9,
+    sound: "audio/spots/V.mp3",
+    soundVolume: 1.0,
+  },
   { id: "N", cx: 90.89, cy: 42.0, w: 3.7, h: 9.8, sound: "audio/spots/N.mp3" },
   { id: "F", cx: 47.26, cy: 60.48, w: 1.8, h: 5.8, sound: "audio/spots/F.mp3" },
   { id: "C", cx: 20.82, cy: 64.6, w: 2.6, h: 5.4, sound: "audio/spots/C.mp3" },
-  { id: "M", cx: 41.25, cy: 67.42, w: 5.3, h: 10.2, sound: "audio/spots/M.mp3" },
+  {
+    id: "M",
+    cx: 41.25,
+    cy: 67.42,
+    w: 5.3,
+    h: 10.2,
+    sound: "audio/spots/M.mp3",
+  },
   { id: "D", cx: 70.8, cy: 70.12, w: 1.6, h: 5.0, sound: "audio/spots/D.mp3" },
-  { id: "A2", cx: 24.55, cy: 88.61, w: 7.6, h: 11.1, sound: "audio/spots/A.mp3" },
+  {
+    id: "A2",
+    cx: 24.55,
+    cy: 88.61,
+    w: 7.6,
+    h: 11.1,
+    sound: "audio/spots/A.mp3",
+    soundVolume: 0.1,
+  },
   { id: "I2", cx: 4.49, cy: 89.52, w: 4.2, h: 9.5, sound: "audio/spots/I.mp3" },
   { id: "H", cx: 54.12, cy: 89.8, w: 10.7, h: 6.0, sound: "audio/spots/H.wav" },
   { id: "O", cx: 74.1, cy: 93.57, w: 3.1, h: 7.4, sound: "audio/spots/O.mp3" },
