@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { overlays } from "../data/page1Data.js";
 import { IMG, playSfx } from "../soundUtils.js";
 import Digicode from "./Digicode.jsx";
+import discovered from "../discovered.js";
 
 const DEBUG =
   typeof window !== "undefined" &&
@@ -108,10 +109,12 @@ export default function OverlayStack({ stack, setStack, onGoToPage }) {
       return;
     }
     if (action.replace) {
+      discovered.add("p", String(action.replace)); // compteur de masques
       setStack((s) => [...s.slice(0, -1), String(action.replace)]);
       return;
     }
     if (action.open) {
+      discovered.add("p", String(action.open)); // compteur de masques
       setStack((s) => [...s, String(action.open)]);
       return;
     }

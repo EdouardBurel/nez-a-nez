@@ -14,8 +14,9 @@ import OverlayStack from "./OverlayStack.jsx";
 import page1Hotspots, { page1SoundZones } from "../page1Hotspots.js";
 import { overlays } from "../data/page1Data.js";
 import sounds from "../sounds.js";
+import discovered from "../discovered.js";
 
-export default function Page1({ debug }) {
+export default function Page1({ debug, onGoToPage }) {
   const [active, setActive] = useState(null); // Lightbox simple
   const [closing, setClosing] = useState(false);
   const [stack, setStack] = useState([]); // images à interactions
@@ -23,6 +24,7 @@ export default function Page1({ debug }) {
 
   const openHotspot = useCallback((spot) => {
     sounds.play(spot.clickSound);
+    discovered.add("p", spot.id); // compteur de masques
     // Zone avec interactions spéciales définies dans page1Data.js ?
     if (overlays[spot.id]) {
       setStack([String(spot.id)]);
@@ -59,7 +61,18 @@ export default function Page1({ debug }) {
         <Lightbox spot={active} closing={closing} onClose={closeLightbox} />
       )}
 
-      <OverlayStack stack={stack} setStack={setStack} onGoToPage={() => {}} />
+      {/* Retour au cabinet — les masques trouvés sont conservés */}
+      <button
+        type="button"
+        className="back-toggle"
+        onClick={() => onGoToPage("cabinet")}
+        aria-label="Retourner au cabinet"
+        title="Retourner au cabinet"
+      >
+        ⟵
+      </button>
+
+      <OverlayStack stack={stack} setStack={setStack} onGoToPage={onGoToPage} />
     </>
   );
 }

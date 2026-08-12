@@ -4,6 +4,8 @@ import Scene from "./components/Scene.jsx";
 import Lightbox from "./components/Lightbox.jsx";
 import AudioPlayer from "./components/AudioPlayer.jsx";
 import sounds from "./sounds.js";
+import discovered from "./discovered.js";
+import MaskCounter from "./components/MaskCounter.jsx";
 // ---------- NOUVEAU : page 1 ----------
 import Page1 from "./components/Page1.jsx";
 import OverlayStack from "./components/OverlayStack.jsx";
@@ -17,21 +19,35 @@ export default function App() {
 
   // ---------- NOUVEAU : navigation + pile d'overlays du cabinet ----------
   const [page, setPage] = useState("cabinet"); // "cabinet" | "page1"
+  const [unlocked, setUnlocked] = useState(false); // digicode déjà réussi ?
   const [stack, setStack] = useState([]); // porte.png → digicode → ...
+
+  // Changer de page ; réussir le digicode déverrouille la porte pour
+  // toute la session (les allers-retours ne redemandent pas le code).
+  const goToPage = (p) => {
+    if (p === "page1") setUnlocked(true);
+    setStack([]);
+    setPage(p);
+  };
 
   const openHotspot = useCallback((spot) => {
     // NOUVEAU : la porte n'ouvre pas la Lightbox, elle lance
     // la séquence porte.png → digicode → page 1
     if (spot.action === "porte") {
       sounds.play(spot.clickSound); // même clic universel que les autres
-      setStack(["porte"]);
+      if (unlocked) {
+        goToPage("page1"); // déjà déverrouillée : on entre directement
+      } else {
+        setStack(["porte"]);
+      }
       return;
     }
     clearTimeout(closeTimer.current);
     setClosing(false);
     setActive(spot);
     sounds.play(spot.clickSound);
-  }, []);
+    discovered.add("c", spot.id); // compteur de masques
+  }, [unlocked]);
 
   const closeLightbox = useCallback(() => {
     sounds.stop(); // fondu de sortie
@@ -69,8 +85,9 @@ export default function App() {
   if (page === "page1") {
     return (
       <div className="app">
-        <Page1 debug={debug} />
+        <Page1 debug={debug} onGoToPage={goToPage} />
         <AudioPlayer key={page} src={musicSrc} />
+        <MaskCounter />
       </div>
     );
   }
@@ -92,9 +109,10 @@ export default function App() {
       {/* NOUVEAU : pile porte.png → digicode 3825869 → page 1
           (la porte elle-même est un hotspot dans hotspots.js,
           avec action: "porte" — voir openHotspot ci-dessus) */}
-      <OverlayStack stack={stack} setStack={setStack} onGoToPage={setPage} />
+      <OverlayStack stack={stack} setStack={setStack} onGoToPage={goToPage} />
 
       <AudioPlayer key={page} src={musicSrc} />
+      <MaskCounter />
 
       <div className="hint" aria-hidden="true">
         Faites défiler pour explorer&nbsp;— cliquez sur les curiosités

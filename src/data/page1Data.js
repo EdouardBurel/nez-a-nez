@@ -36,29 +36,61 @@ function grilleDigicode(box) {
   return keys;
 }
 
-// ---------- Générateur de la grille de l'image 16 (30 encarts) ----------
-// 6 colonnes × 5 lignes. Seul l'encart "special" ouvre 16b.
-function grille16() {
-  const zones = [];
-  const cols = 6, rows = 5;
-  // Zone occupée par l'ensemble des tableaux dans 16.png (à ajuster)
-  const box = { left: 9, top: 20, width: 82, height: 66 };
-  // L'encart blanc de la maquette : 4e ligne, 3e colonne
-  const SPECIAL = { row: 3, col: 2 }; // index base 0
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const special = r === SPECIAL.row && c === SPECIAL.col;
-      zones.push({
-        id: `tile-${r}-${c}`,
-        left: box.left + (c * box.width) / cols,
-        top: box.top + (r * box.height) / rows,
-        width: box.width / cols - 1,
-        height: box.height / rows - 1,
-        action: special ? { open: "16b" } : { close: true },
+// ---------- Touches placées à partir de centres MESURÉS ----------
+// cols = [[x,x,x] par rangée] en % , rows = [y,y,y,y] en %
+// Utile quand le pavé est incliné et qu'une grille régulière ne colle pas.
+function touchesMesurees(cols, rows, kw, kh) {
+  const symbols = [
+    ["1", "2", "3"],
+    ["4", "5", "6"],
+    ["7", "8", "9"],
+    ["*", "0", "#"],
+  ];
+  const keys = [];
+  rows.forEach((cy, r) => {
+    cols[r].forEach((cx, c) => {
+      keys.push({
+        symbol: symbols[r][c],
+        left: cx - kw / 2,
+        top: cy - kh / 2,
+        width: kw,
+        height: kh,
       });
-    }
-  }
-  return zones;
+    });
+  });
+  return keys;
+}
+
+// ---------- Grille de l'image 16 : 30 encarts MESURÉS ----------
+// Chaque tuile a été détectée sur 16.png (1536 × 1024) : la grille
+// n'est pas parfaitement régulière, d'où les positions individuelles.
+// [left, top, width, height] en % — ordre de lecture, 6 par rangée.
+const TUILES_16 = [
+  [2.08, 1.95, 14.39, 18.36], [18.23, 1.95, 14.52, 18.36], [34.57, 1.86, 14.32, 18.26],
+  [50.65, 1.86, 14.32, 18.36], [66.8, 1.86, 14.45, 18.36], [83.14, 1.86, 14.91, 18.26],
+  [1.89, 22.36, 14.58, 17.38], [18.23, 22.36, 14.52, 17.48], [34.51, 22.36, 14.39, 17.38],
+  [50.59, 22.36, 14.45, 17.48], [66.8, 22.36, 14.45, 17.48], [83.14, 22.36, 14.97, 17.38],
+  [2.02, 41.99, 14.45, 17.09], [18.29, 41.99, 14.45, 17.09], [34.51, 41.99, 14.39, 17.09],
+  [50.59, 41.99, 14.45, 17.09], [66.73, 41.99, 14.52, 16.99], [83.14, 41.99, 14.91, 17.19],
+  [2.02, 61.13, 14.45, 16.99], [18.23, 61.13, 14.52, 16.99], [34.57, 61.13, 14.32, 16.8],
+  [50.65, 61.13, 14.39, 16.89], [66.8, 61.13, 14.52, 16.89], [83.14, 61.13, 14.97, 16.89],
+  [2.08, 80.18, 14.39, 16.99], [18.36, 80.18, 14.39, 16.99], [34.57, 80.18, 14.32, 16.99],
+  [50.65, 80.18, 14.39, 16.99], [66.73, 80.18, 14.58, 16.99], [83.14, 80.18, 14.91, 16.8],
+];
+
+// Index de l'encart gagnant : 4e rangée, 3e colonne (dirigeable,
+// hélicoptère, radio, cafetière — les objets de la pièce !).
+const TUILE_GAGNANTE = 3 * 6 + 2; // = 20
+
+function grille16() {
+  return TUILES_16.map(([left, top, width, height], i) => ({
+    id: `tile-${Math.floor(i / 6)}-${i % 6}`,
+    left,
+    top,
+    width,
+    height,
+    action: i === TUILE_GAGNANTE ? { open: "16b" } : { close: true },
+  }));
 }
 
 // ============================================================
@@ -142,11 +174,24 @@ export const overlays = {
     image: "15.png",
     code: "15082021",
     beep: "Bip digicode.mp3",
-    validation: "Validation Digicode porte 1.mp3",
-    keys: grilleDigicode({ left: 37, top: 33, width: 26, height: 37 }),
-    // ⚠️ Photo différente (digicode de l'image 15) : valeurs estimées,
-    // à mesurer/ajuster avec ?debug — 8 LEDs pour 8 chiffres.
-    dots: { cy: 26.5, left: 38, right: 62, size: 2.4 },
+    validation: "Validation digicode vitrine.mp3",
+    // Touches mesurées une par une sur 15.png (le pavé est légèrement
+    // incliné par la perspective : une grille régulière tombait à côté).
+    keys: touchesMesurees(
+      [
+        [42.42, 52.99, 63.1], // 1 2 3
+        [42.56, 52.8, 63.1], //  4 5 6
+        [42.65, 53.12, 63.14], // 7 8 9
+        [42.78, 53.12, 63.14], // * 0 #
+      ],
+      [33.2, 41.9, 50.2, 58.4], // hauteurs des 4 rangées
+      8, // largeur de la zone cliquable
+      7, // hauteur de la zone cliquable
+    ),
+    // 8 LEDs alignées dans le bandeau sombre AU-DESSUS des deux lampes
+    // (zone entourée en rouge sur la maquette).
+    dots: { cy: 18.2, left: 38.5, right: 66.5, size: 2.4 },
+    dotStyle: "light", // surface sombre : les pastilles s'allument
     onSuccess: { open: "15b" },
     // Code faux → on referme le digicode, retour à la scène Page 1
     onFail: { closeAll: true },
@@ -247,7 +292,7 @@ export const overlays = {
     zones: [
       {
         id: "portrait",
-        left: 59, top: 10, width: 9, height: 12,
+        left: 66, top: 12, width: 11, height: 12,
         action: { open: "42b" },
       },
     ],
@@ -282,7 +327,7 @@ export const overlays = {
     zones: [
       {
         id: "portrait",
-        left: 62, top: 40, width: 10, height: 12,
+        left: 91, top: 45, width: 10, height: 12,
         action: { open: "44b" },
       },
     ],

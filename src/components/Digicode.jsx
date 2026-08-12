@@ -30,7 +30,7 @@ export default function Digicode({ def, onSuccess, onFail, onClose, debug }) {
   const press = (e, key) => {
     e.stopPropagation();
     if (done.current) return;
-    playSfx(def.beep);
+    playSfx(def.beep, 0.1);
     setFlashKey(key.symbol);
     setTimeout(() => setFlashKey(null), 150);
 
@@ -72,6 +72,13 @@ export default function Digicode({ def, onSuccess, onFail, onClose, debug }) {
   const ON = "#ffc46a"; // ambre = chiffre saisi
   const BAD = "#ff3b30"; // rouge = code faux
 
+  // Deux styles de LEDs :
+  //  - "reveal" (défaut) : la photo montre des LEDs DÉJÀ allumées, on
+  //    peint une pastille sombre par-dessus qu'on retire à la saisie.
+  //  - "light" : surface sombre sans LED photographiée, les pastilles
+  //    s'allument (et restent invisibles tant que rien n'est saisi).
+  const style = def.dotStyle || "reveal";
+
   return (
     <div
       onClick={onClose}
@@ -105,7 +112,12 @@ export default function Digicode({ def, onSuccess, onFail, onClose, debug }) {
         {/* ---------- LEDs de saisie (rangée du bas) ---------- */}
         {dots.map((d, i) => {
           const lit = i < entered.length;
-          const color = error ? BAD : lit ? ON : OFF;
+          const on = error ? BAD : ON;
+          // style "light" : rien de visible tant que la LED est éteinte
+          const bg = lit || error ? on : style === "light" ? "transparent" : OFF;
+          const glow = error
+            ? "rgba(255,59,48,0.75)"
+            : "rgba(255,196,106,0.75)";
           return (
             <div
               key={"dot" + i}
@@ -117,10 +129,12 @@ export default function Digicode({ def, onSuccess, onFail, onClose, debug }) {
                 aspectRatio: "1 / 1",
                 transform: "translate(-50%, -50%)",
                 borderRadius: "50%",
-                background: color,
+                background: bg,
                 boxShadow:
                   error || lit
-                    ? `0 0 8px 3px ${error ? "rgba(255,59,48,0.75)" : "rgba(255,196,106,0.75)"}`
+                    ? `0 0 8px 3px ${glow}`
+                    : style === "light"
+                    ? "none"
                     : "inset 0 0 3px rgba(0,0,0,0.8)",
                 transition: "background 0.12s ease, box-shadow 0.12s ease",
                 outline: debug ? "1px solid #00ff66" : "none",

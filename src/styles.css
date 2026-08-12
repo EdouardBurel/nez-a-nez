@@ -388,6 +388,125 @@ body {
   }
 }
 
+/* ---------- Compteur de masques découverts ---------- */
+
+.mask-counter {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 60;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid #6b4d2f;
+  background: rgba(30, 20, 12, 0.85);
+  color: var(--papier);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  user-select: none;
+  transition:
+    box-shadow 400ms ease,
+    border-color 400ms ease;
+}
+
+.mask-counter-label {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.mask-counter-score {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--lanterne);
+  font-variant-numeric: tabular-nums; /* le chiffre ne "saute" pas */
+}
+
+/* Sursaut de lanterne à chaque découverte */
+.mask-counter.is-pulsing {
+  box-shadow: 0 0 18px 4px rgba(255, 179, 71, 0.45);
+  border-color: var(--lanterne);
+}
+.mask-counter.is-pulsing .mask-counter-score {
+  animation: score-pop 600ms ease;
+}
+@keyframes score-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.35);
+    color: var(--neon);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Cabinet complet : le compteur passe en néon */
+.mask-counter.is-complete {
+  border-color: var(--neon);
+  box-shadow: 0 0 22px 5px rgba(255, 140, 26, 0.5);
+}
+.mask-counter.is-complete .mask-counter-score {
+  color: var(--neon);
+}
+
+/* Petits écrans : plus compact, et on masque le libellé */
+@media (max-width: 820px), (pointer: coarse) {
+  .mask-counter {
+    left: 12px;
+    bottom: 12px;
+    padding: 6px 12px;
+    font-size: 0.72rem;
+  }
+  .mask-counter-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mask-counter.is-pulsing .mask-counter-score {
+    animation: none;
+  }
+}
+
+.back-toggle {
+  position: fixed;
+  right: 76px; /* à gauche du bouton musique */
+  bottom: 18px;
+  z-index: 60;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid #6b4d2f;
+  background: rgba(30, 20, 12, 0.85);
+  color: var(--papier);
+  font-size: 25px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    transform 200ms ease;
+}
+.back-toggle:hover {
+  background: rgba(58, 40, 24, 0.95);
+  transform: scale(1.06);
+}
+.back-toggle:focus-visible {
+  outline: 2px solid var(--lanterne);
+}
+
+@media (max-width: 820px), (pointer: coarse) {
+  .back-toggle {
+    right: 66px;
+    bottom: 12px;
+  }
+}
+
 /* ---------- Petits écrans : navigation par défilement libre ---------- */
 
 @media (max-width: 820px), (pointer: coarse) {
