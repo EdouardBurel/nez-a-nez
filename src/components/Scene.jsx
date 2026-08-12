@@ -43,6 +43,7 @@ export default function Scene({
 
   // Cliquer-glisser pour se déplacer
   const onPointerDown = (e) => {
+    if (e.pointerType !== "mouse") return; // le doigt utilise le défilement natif
     if (e.button !== 0) return;
     const el = scrollerRef.current;
     drag.current = {
