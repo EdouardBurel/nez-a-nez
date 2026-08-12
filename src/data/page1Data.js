@@ -188,8 +188,20 @@ export const overlays = {
   20: {
     image: "20.png",
     zones: [
-      { id: "af3", left: 10, top: 32, width: 11, height: 14, action: { open: "af3" } },
-      { id: "af4", left: 10, top: 49, width: 8, height: 8, action: { open: "af4" } },
+      // Mesurées sur 20.png : les deux cadres au mur à gauche.
+      // AF4 est coupé par le bord de l'image, la zone s'arrête donc à 0 %.
+      {
+        id: "af3",
+        title: "Affichette 3",
+        left: 0.36, top: 20.46, width: 10.13, height: 16.1,
+        action: { open: "af3" },
+      },
+      {
+        id: "af4",
+        title: "Affichette 4",
+        left: 0.36, top: 42.29, width: 6.87, height: 8.05,
+        action: { open: "af4" },
+      },
     ],
   },
   af3: { image: "AF3.png", openSound: "photo.mp3" },
