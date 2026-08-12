@@ -65,21 +65,23 @@ function OverlayImage({ def, onAction, onClose }) {
           }}
         />
         {(def.zones || []).map((zone) => (
-          <div
+          <button
             key={zone.id}
+            type="button"
+            className={`hotspot${DEBUG ? " debug" : ""}`}
             onClick={(e) => handleZoneClick(e, zone)}
+            aria-label={zone.title || zone.id}
+            title={DEBUG ? zone.id : undefined}
             style={{
               position: "absolute",
               left: zone.left + "%",
               top: zone.top + "%",
               width: zone.width + "%",
               height: zone.height + "%",
-              cursor: "pointer",
-              outline: DEBUG ? "2px solid #00ff66" : "none",
-              background: DEBUG ? "rgba(0,255,102,0.15)" : "transparent",
             }}
-            title={DEBUG ? zone.id : undefined}
-          />
+          >
+            {DEBUG && <span className="hotspot-id">{zone.id}</span>}
+          </button>
         ))}
       </div>
     </div>

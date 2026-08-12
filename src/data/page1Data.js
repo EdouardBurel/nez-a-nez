@@ -71,12 +71,13 @@ function grille16() {
 export const overlays = {
   // ----- Séquence de la porte (depuis le cabinet) -----
   porte: {
-    image: "Porte.png",
+    image: "porte.png",
     zones: [
       {
         id: "digicode-mural",
-        // Petit boîtier à gauche de la porte dans porte.png (à ajuster)
-        left: 26, top: 40, width: 9, height: 12,
+        title: "Le digicode",
+        // Boîtier complet (auvent + pavé) mesuré sur porte.png
+        left: 22.45, top: 36.75, width: 9.5, height: 15.5,
         action: { open: "digicodePorte" },
       },
     ],
@@ -88,11 +89,13 @@ export const overlays = {
     code: "3825869",
     beep: "Bip digicode.mp3",
     validation: "Validation Digicode porte 1.mp3",
-    // Pavé de touches dans l'image (à ajuster avec ?debug)
-    keys: grilleDigicode({ left: 36, top: 50, width: 27, height: 28 }),
-    // Bande des petites LEDs au-dessus des touches (à ajuster) :
-    // 7 points répartis dans cette bande (autant que de chiffres)
-    dots: { left: 34, top: 42, width: 31, height: 2.2 },
+    // Mesuré sur l'asset réel (1086 × 1448) :
+    // colonnes à 37.9 / 48.0 / 58.3 %, lignes à 52.9 / 60.1 / 67.2 / 74.5 %
+    keys: grilleDigicode({ left: 32.8, top: 49.34, width: 30.6, height: 28.7 }),
+    // Rangée unique de 7 LEDs, centres de 33.21 % à 64.16 %, à 45.78 %.
+    // Sur la photo elles sont DÉJÀ allumées : on peint une pastille
+    // sombre par-dessus, retirée au fur et à mesure de la saisie.
+    dots: { cy: 45.78, left: 33.21, right: 64.16, size: 2.3 },
     onSuccess: { goToPage: "page1" },
     // Code faux (7 chiffres saisis) → retour à la scène principale
     onFail: { closeAll: true },
@@ -114,8 +117,20 @@ export const overlays = {
   6: {
     image: "6.png",
     zones: [
-      { id: "af1", left: 72, top: 17, width: 12, height: 22, action: { open: "af1" } },
-      { id: "af2", left: 80, top: 47, width: 11, height: 20, action: { open: "af2" } },
+      // Mesurées sur 6.png : AF1 = la photo du haut,
+      // AF2 = l'affiche « La Côte d'Azur » en dessous
+      {
+        id: "af1",
+        title: "Affichette 1",
+        left: 77.5, top: 8.5, width: 12.0, height: 25.5,
+        action: { open: "af1" },
+      },
+      {
+        id: "af2",
+        title: "Affichette 2",
+        left: 87.3, top: 33.5, width: 10.5, height: 23.5,
+        action: { open: "af2" },
+      },
     ],
   },
   af1: { image: "AF1.png" },
@@ -129,8 +144,9 @@ export const overlays = {
     beep: "Bip digicode.mp3",
     validation: "Validation Digicode porte 1.mp3",
     keys: grilleDigicode({ left: 37, top: 33, width: 26, height: 37 }),
-    // Les deux fentes blanches en haut du boîtier → 8 LEDs (à ajuster)
-    dots: { left: 36, top: 26, width: 28, height: 2.2 },
+    // ⚠️ Photo différente (digicode de l'image 15) : valeurs estimées,
+    // à mesurer/ajuster avec ?debug — 8 LEDs pour 8 chiffres.
+    dots: { cy: 26.5, left: 38, right: 62, size: 2.4 },
     onSuccess: { open: "15b" },
     // Code faux → on referme le digicode, retour à la scène Page 1
     onFail: { closeAll: true },

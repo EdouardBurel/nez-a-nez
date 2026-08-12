@@ -52,24 +52,25 @@ export default function Digicode({ def, onSuccess, onFail, onClose, debug }) {
     }
   };
 
-  // Positions des LEDs : réparties dans la bande def.dots
+  // Positions des LEDs : centres mesurés sur la photo.
+  // def.dots = { cy, left, right, size }  (tout en % de l'image)
+  //   cy    : hauteur de la rangée ALLUMÉE (la rangée du bas)
+  //   left  : centre de la 1re LED, right : centre de la dernière
+  //   size  : diamètre d'une LED
+  // NB : sur la photo les LEDs sont DÉJÀ allumées ; on peint donc
+  // une pastille sombre par-dessus tant que le chiffre n'est pas saisi.
   const dots = [];
   if (def.dots) {
-    const { left, top, width, height } = def.dots;
+    const { cy, left, right, size } = def.dots;
+    const step = codeLength > 1 ? (right - left) / (codeLength - 1) : 0;
     for (let i = 0; i < codeLength; i++) {
-      dots.push({
-        left: left + ((i + 0.5) * width) / codeLength,
-        top: top + height / 2,
-        size: height,
-      });
+      dots.push({ cx: left + i * step, cy, size });
     }
   }
 
-  const dotColor = (i) => {
-    if (error) return "#ff3b30"; // code faux → rouge
-    if (i < entered.length) return "#ffd27a"; // saisi → ambre allumé
-    return "rgba(255,255,255,0.18)"; // éteint
-  };
+  const OFF = "#432c18"; // bronze sombre = LED éteinte (mêmes tons que le boîtier)
+  const ON = "#ffc46a"; // ambre = chiffre saisi
+  const BAD = "#ff3b30"; // rouge = code faux
 
   return (
     <div
@@ -101,29 +102,33 @@ export default function Digicode({ def, onSuccess, onFail, onClose, debug }) {
           }}
         />
 
-        {/* ---------- LEDs de saisie ---------- */}
-        {dots.map((d, i) => (
-          <div
-            key={"dot" + i}
-            style={{
-              position: "absolute",
-              left: d.left + "%",
-              top: d.top + "%",
-              width: d.size + "%",
-              aspectRatio: "1 / 1",
-              transform: "translate(-50%, -50%)",
-              borderRadius: "50%",
-              background: dotColor(i),
-              boxShadow:
-                i < entered.length || error
-                  ? `0 0 6px 2px ${error ? "rgba(255,59,48,0.7)" : "rgba(255,210,122,0.7)"}`
-                  : "none",
-              transition: "background 0.12s ease, box-shadow 0.12s ease",
-              outline: debug ? "1px solid #00ff66" : "none",
-              pointerEvents: "none",
-            }}
-          />
-        ))}
+        {/* ---------- LEDs de saisie (rangée du bas) ---------- */}
+        {dots.map((d, i) => {
+          const lit = i < entered.length;
+          const color = error ? BAD : lit ? ON : OFF;
+          return (
+            <div
+              key={"dot" + i}
+              style={{
+                position: "absolute",
+                left: d.cx + "%",
+                top: d.cy + "%",
+                width: d.size + "%",
+                aspectRatio: "1 / 1",
+                transform: "translate(-50%, -50%)",
+                borderRadius: "50%",
+                background: color,
+                boxShadow:
+                  error || lit
+                    ? `0 0 8px 3px ${error ? "rgba(255,59,48,0.75)" : "rgba(255,196,106,0.75)"}`
+                    : "inset 0 0 3px rgba(0,0,0,0.8)",
+                transition: "background 0.12s ease, box-shadow 0.12s ease",
+                outline: debug ? "1px solid #00ff66" : "none",
+                pointerEvents: "none",
+              }}
+            />
+          );
+        })}
 
         {/* ---------- Touches ---------- */}
         {def.keys.map((key) => (
