@@ -26,7 +26,7 @@ const page1Hotspots = [
   // ---- Cuisine (gauche) ----
   { id: "10", cx: 5.63, cy: 49.79, w: 3.22, h: 5.55, image: "assets/page1/10.png", title: "Curiosité 10", sound: "audio/page1/1.mp3" },
   { id: "11", cx: 12.69, cy: 52.83, w: 3.04, h: 5.66, image: "assets/page1/11.png", title: "Curiosité 11", sound: "audio/page1/2.mp3" },
-  { id: "12", cx: 17.63, cy: 52.67, w: 3.16, h: 5.98, image: "assets/page1/12.png", title: "Curiosité 12", sound: "audio/page1/3.mp3" },
+  { id: "12", cx: 17.63, cy: 52.67, w: 3.16, h: 5.98, image: "assets/page1/12.png", title: "A venir", sound: "audio/page1/3.mp3" },
   { id: "13", cx: 24.66, cy: 58.43, w: 3.28, h: 6.83, image: "assets/page1/13.png", title: "Curiosité 13", sound: "audio/page1/4.mp3" },
   { id: "14", cx: 34.63, cy: 50.0, w: 3.34, h: 11.74, image: "assets/page1/14.png", title: "La plante" },
 

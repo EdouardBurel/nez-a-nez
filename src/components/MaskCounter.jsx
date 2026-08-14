@@ -26,7 +26,6 @@ export default function MaskCounter() {
 
   return (
     <div className={`mask-counter${pulse ? " is-pulsing" : ""}${complet ? " is-complete" : ""}`}>
-      <span className="mask-counter-label">Masques découverts</span>
       <span className="mask-counter-score">
         {n}&nbsp;/&nbsp;{total}
       </span>

@@ -17,7 +17,17 @@ import page1Hotspots from "./page1Hotspots.js";
 import { overlays } from "./data/page1Data.js";
 
 // Identifiants à exclure du décompte
-const EXCLUS = new Set(["porte", "digicodePorte", "15", "porte-page1"]);
+// Identifiants à exclure du décompte : la porte, les deux digicodes,
+// et l'image 16 (le sarcophage) qui est une énigme, pas un masque.
+// 16b, l'image cachée révélée par la bonne tuile, COMPTE comme une
+// découverte (c'est une vraie récompense à trouver).
+const EXCLUS = new Set([
+  "porte",
+  "digicodePorte",
+  "15",
+  "porte-page1",
+  "16",
+]);
 
 // --- Construction de la liste complète des masques ---
 function tousLesMasques() {
