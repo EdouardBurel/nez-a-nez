@@ -10,7 +10,7 @@
 // ============================================================
 import { useEffect, useState } from "react";
 import { overlays } from "../data/page1Data.js";
-import { IMG, playSfx } from "../soundUtils.js";
+import { IMG, playSfx, playSfxCapped } from "../soundUtils.js";
 import Digicode from "./Digicode.jsx";
 import discovered from "../discovered.js";
 
@@ -24,7 +24,10 @@ function OverlayImage({ def, onAction, onClose }) {
   useEffect(() => {
     // Fondu d'entrée + bruitage d'ouverture
     const t = requestAnimationFrame(() => setVisible(true));
-    if (def.openSound) playSfx(def.openSound);
+    if (def.openSound) {
+      if (def.openSoundMaxMs) playSfxCapped(def.openSound, def.openSoundMaxMs);
+      else playSfx(def.openSound);
+    }
     return () => cancelAnimationFrame(t);
   }, [def]);
 
@@ -97,6 +100,11 @@ export default function OverlayStack({ stack, setStack, onGoToPage }) {
 
   const closeTop = () => setStack((s) => s.slice(0, -1));
 
+  // Certaines images (ex. 16b, révélée depuis la grille 16) doivent
+  // se fermer DIRECTEMENT vers la pièce plutôt que de revenir à
+  // l'image précédente de la pile.
+  const closeOutside = def.closeToRoom ? () => setStack([]) : closeTop;
+
   const runAction = (action) => {
     if (!action) return closeTop();
     if (action.sound) playSfx(action.sound);
@@ -135,5 +143,5 @@ export default function OverlayStack({ stack, setStack, onGoToPage }) {
     );
   }
 
-  return <OverlayImage def={def} onAction={runAction} onClose={closeTop} />;
+  return <OverlayImage def={def} onAction={runAction} onClose={closeOutside} />;
 }

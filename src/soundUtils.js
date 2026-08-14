@@ -1,13 +1,12 @@
 // ============================================================
 // soundUtils.js — helpers audio pour la Page 1
 // ------------------------------------------------------------
-// - playSfx(src)      : joue un bruitage "one-shot" (clics, bips,
-//                       validations, photo.mp3, Croquer.mp3, etc.)
-// - hoverSound(src)   : gestionnaire de sons de survol, un seul à
-//                       la fois, avec fade-out du précédent
-//                       (même logique que src/sounds.js du cabinet —
-//                       si tu préfères, remplace ces appels par ton
-//                       manager existant)
+// - playSfx(src)       : joue un bruitage "one-shot" (clics, bips,
+//                        validations, photo.mp3, Croquer.mp3, etc.)
+// - playSfxCapped(...)  : idem mais coupe le son en fondu après N ms
+//                        (utilisé pour raccourcir Mystère1.mp3)
+// - hoverSound(src)    : gestionnaire de sons de survol, un seul à
+//                        la fois, avec fade-out du précédent
 // ============================================================
 
 // Chemins alignés sur la structure du projet :
@@ -23,6 +22,25 @@ export function playSfx(name, volume = 0.9) {
   a.volume = volume;
   // Le catch évite les erreurs "play() interrupted" dans la console
   a.play().catch(() => {});
+  return a;
+}
+
+// ---------- Bruitage coupé en fondu après maxMs millisecondes ----------
+// Laisse le fichier intact : on arrête juste la lecture plus tôt.
+export function playSfxCapped(name, maxMs = 3000, volume = 0.9) {
+  const a = playSfx(name, volume);
+  if (!a) return;
+  const fadeMs = 400; // durée du fondu de sortie
+  setTimeout(() => {
+    const fade = setInterval(() => {
+      if (a.volume > 0.08) {
+        a.volume = Math.max(0, a.volume - 0.08);
+      } else {
+        a.pause();
+        clearInterval(fade);
+      }
+    }, 40);
+  }, Math.max(0, maxMs - fadeMs));
   return a;
 }
 
