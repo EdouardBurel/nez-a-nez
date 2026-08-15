@@ -259,7 +259,7 @@ export const overlays = {
     zones: [
       {
         id: "pupille",
-        left: 45, top: 33, width: 13, height: 12,
+        left: 50, top: 35, width: 16, height: 13,
         action: { sound: "Cyclope enfermé 2.mp3", keepOpen: true },
       },
     ],
@@ -271,7 +271,7 @@ export const overlays = {
     zones: [
       {
         id: "paniere",
-        left: 5, top: 68, width: 24, height: 24,
+        left: 0, top: 80, width: 24, height: 24,
         action: { replace: "41b", sound: "Croquer.mp3" },
       },
     ],
@@ -281,7 +281,7 @@ export const overlays = {
     zones: [
       {
         id: "paniere-retour",
-        left: 5, top: 68, width: 24, height: 24,
+        left: 0, top: 80, width: 24, height: 24,
         action: { replace: "41", sound: "Croquer.mp3" },
       },
     ],
@@ -293,7 +293,7 @@ export const overlays = {
     zones: [
       {
         id: "portrait",
-        left: 59, top: 10, width: 9, height: 12,
+        left: 65, top: 12, width: 12, height: 12,
         action: { open: "42b" },
       },
     ],
@@ -306,7 +306,7 @@ export const overlays = {
     zones: [
       {
         id: "bol",
-        left: 5, top: 70, width: 24, height: 22,
+        left: 2, top: 74, width: 24, height: 22,
         action: { replace: "43b", sound: "Croquer.mp3" },
       },
     ],
@@ -316,7 +316,7 @@ export const overlays = {
     zones: [
       {
         id: "bol-retour",
-        left: 5, top: 70, width: 24, height: 22,
+        left: 2, top: 78, width: 24, height: 22,
         action: { replace: "43", sound: "Croquer.mp3" },
       },
     ],
@@ -328,7 +328,7 @@ export const overlays = {
     zones: [
       {
         id: "portrait",
-        left: 62, top: 40, width: 10, height: 12,
+        left: 90, top: 45, width: 12, height: 12,
         action: { open: "44b" },
       },
     ],
