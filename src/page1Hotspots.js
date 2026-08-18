@@ -57,6 +57,17 @@ const page1Hotspots = [
   { id: "42", cx: 57.5, cy: 77.91, w: 7.03, h: 7.15, image: "assets/page1/42.png", title: "La cafetière" },
   { id: "43", cx: 80.41, cy: 77.91, w: 7.33, h: 5.02, image: "assets/page1/43.png", title: "Curiosité 43" },
   { id: "44", cx: 96.96, cy: 91.62, w: 5.18, h: 16.65, image: "assets/page1/44.png", title: "Curiosité 44" },
+
+  // ---- NOUVEAU : curiosités 47 à 52 (positions des pastilles de la
+  // maquette, mesurées en % de page1.png). À ajuster avec ?debug pour
+  // coller au plus près de chaque objet. Chaque zone ouvre son image
+  // assets/page1/NN.png dans la Lightbox. ----
+  { id: "47", cx: 39.5, cy: 18.0, w: 3.5, h: 7.0,  image: "assets/page1/47.png", title: "Curiosité 47" },
+  { id: "51", cx: 47.5, cy: 21.0, w: 3.5, h: 6.0,  image: "assets/page1/51.png", title: "Curiosité 51" },
+  { id: "49", cx: 22.5, cy: 50.0, w: 4.0, h: 7.0,  image: "assets/page1/49.png", title: "Curiosité 49" },
+  { id: "50", cx: 51.0, cy: 45.0, w: 2.5, h: 5.0,  image: "assets/page1/50.png", title: "Curiosité 50" },
+  { id: "52", cx: 65.0, cy: 45.0, w: 4.5, h: 9.0,  image: "assets/page1/52.png", title: "Curiosité 52" },
+  { id: "48", cx: 80.0, cy: 40.0, w: 4.0, h: 7.0,  image: "assets/page1/48.png", title: "Curiosité 48" },
 ];
 
 /** Zones sonores libres de la page 1 (survol uniquement, pas de pop-up). */

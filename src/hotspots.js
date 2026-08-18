@@ -114,6 +114,19 @@ const hotspots = [
     sound: "audio/spots/L.mp3",
   },
   {
+    // NOUVEAU : petite zone (emplacement du rectangle blanc « 11b »
+    // sur la maquette, près de la cage à oiseaux sous le PMU).
+    // Un clic ouvre l'image 11b dans la Lightbox.
+    // Position mesuree sur la maquette ; ajustez avec ?debug si besoin.
+    id: "11b",
+    cx: 15.9,
+    cy: 42.0,
+    w: 1.8,
+    h: 6.2,
+    image: "assets/details/11b.png",
+    title: "Curiosité 11b",
+  },
+  {
     id: "12",
     cx: 18.79,
     cy: 37.88,

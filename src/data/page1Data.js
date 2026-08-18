@@ -142,6 +142,42 @@ export const overlays = {
         left: 44, top: 33, width: 12, height: 9,
         action: { sound: "Cyclope enfermé 1.mp3", keepOpen: true },
       },
+      {
+        // NOUVEAU : le nom « KAEL DRAVEN » dans les crédits (bas de
+        // l'affiche). Un clic ouvre 2b.jpg et lance le bruitage pleurs.mp3.
+        // Zone mesurée sur 2.png ; ajustez avec ?debug si besoin.
+        id: "kael-draven",
+        title: "Kael Draven",
+        left: 42, top: 94.5, width: 17, height: 4,
+        action: { sound: "pleurs.mp3", open: "2b" },
+      },
+    ],
+  },
+  // ----- Image 2b : révélée en cliquant sur KAEL DRAVEN -----
+  // Un minuscule endroit ouvre 2c.jpg et lance ambiance.mp3.
+  // (Placement du point à ajuster avec ?debug — zone verte.)
+  "2b": {
+    image: "2b.jpg",
+    zones: [
+      {
+        id: "point-secret",
+        title: "Point secret",
+        left: 48, top: 48, width: 4, height: 4,
+        action: { sound: "ambiance.mp3", open: "2c" },
+      },
+    ],
+  },
+  // ----- Image 2c : une porte. Cliquer sur la porte joue fermé.mp3. -----
+  // (Zone de la porte à ajuster avec ?debug — zone verte.)
+  "2c": {
+    image: "2c.jpg",
+    zones: [
+      {
+        id: "porte",
+        title: "La porte",
+        left: 30, top: 20, width: 40, height: 65,
+        action: { sound: "fermé.mp3", keepOpen: true },
+      },
     ],
   },
 
@@ -228,7 +264,20 @@ export const overlays = {
       },
     ],
   },
-  "17c": { image: "17c.png", openSound: "photo.mp3" },
+  "17c": {
+    image: "17c.png",
+    openSound: "photo.mp3",
+    // NOUVEAU : re-cliquer sur la photo révèle 17d.png (+ photo.mp3).
+    zones: [
+      {
+        id: "photo-encore",
+        title: "La photo",
+        left: 8, top: 8, width: 84, height: 84,
+        action: { open: "17d" },
+      },
+    ],
+  },
+  "17d": { image: "17d.png", openSound: "photo.mp3" },
 
   // ----- Image 20 : femme à l'échelle + AF3 / AF4 -----
   20: {
