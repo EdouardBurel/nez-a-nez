@@ -277,7 +277,7 @@ export const overlays = {
       {
         id: "photo-encore",
         title: "La photo",
-        left: 8, top: 8, width: 84, height: 84,
+        left: 35, top: 44, width: 11, height: 9,
         action: { open: "17d" },
       },
     ],
