@@ -24,11 +24,28 @@ function OverlayImage({ def, onAction, onClose }) {
   useEffect(() => {
     // Fondu d'entrée + bruitage d'ouverture
     const t = requestAnimationFrame(() => setVisible(true));
+    let stopOpenSound = null;
     if (def.openSound) {
-      if (def.openSoundMaxMs) playSfxCapped(def.openSound, def.openSoundMaxMs);
-      else playSfx(def.openSound);
+      if (def.openSoundMaxMs) {
+        playSfxCapped(def.openSound, def.openSoundMaxMs);
+      } else {
+        const audio = playSfx(def.openSound);
+        // stopOnClose : couper ce son dès que l'image change (ex. on
+        // passe à 2c) ou disparaît (on quitte 2b). Ex. pleurs.mp3.
+        if (def.stopOnClose && audio) {
+          stopOpenSound = () => {
+            try {
+              audio.pause();
+              audio.currentTime = 0;
+            } catch {}
+          };
+        }
+      }
     }
-    return () => cancelAnimationFrame(t);
+    return () => {
+      cancelAnimationFrame(t);
+      if (stopOpenSound) stopOpenSound();
+    };
   }, [def]);
 
   const handleZoneClick = (e, zone) => {

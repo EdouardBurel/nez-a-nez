@@ -144,20 +144,25 @@ export const overlays = {
       },
       {
         // NOUVEAU : le nom « KAEL DRAVEN » dans les crédits (bas de
-        // l'affiche). Un clic ouvre 2b.jpg et lance le bruitage pleurs.mp3.
+        // l'affiche). Un clic ouvre 2b.jpg (pleurs.mp3 est joué par
+        // l'openSound de 2b, pour pouvoir être coupé à la sortie).
         // Zone mesurée sur 2.png ; ajustez avec ?debug si besoin.
         id: "kael-draven",
         title: "Kael Draven",
         left: 42, top: 94.5, width: 17, height: 4,
-        action: { sound: "pleurs.mp3", open: "2b" },
+        action: { open: "2b" },
       },
     ],
   },
   // ----- Image 2b : révélée en cliquant sur KAEL DRAVEN -----
+  // pleurs.mp3 démarre à l'ouverture ; stopOnClose:true le coupe dès
+  // qu'on ouvre 2c OU qu'on quitte 2b (voir OverlayStack.jsx).
   // Un minuscule endroit ouvre 2c.jpg et lance ambiance.mp3.
   // (Placement du point à ajuster avec ?debug — zone verte.)
   "2b": {
     image: "2b.jpg",
+    openSound: "pleurs.mp3",
+    stopOnClose: true,
     zones: [
       {
         id: "point-secret",
@@ -176,7 +181,7 @@ export const overlays = {
         id: "porte",
         title: "La porte",
         left: 30, top: 20, width: 40, height: 65,
-        action: { sound: "fermé.mp3", keepOpen: true },
+        action: { sound: "Fermé.mp3", keepOpen: true },
       },
     ],
   },
